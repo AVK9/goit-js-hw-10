@@ -4,24 +4,27 @@ console.log(fetchBreeds());
 console.log(fetchCatByBreed('abys'));
 
 refs = {
-    select: document.querySelector('.breed-select')
+    select: document.querySelector('.breed-select'),
+    loaderMes: document.querySelector('.loader'),
+    errorMes: document.querySelector('.error'),
+    catInfo: document.querySelector('.cat-info'),
 }
 
-// refs.select.addEventListener('click', onCatalog);
-
-
-// onCatalog();
-// function onCatalog(evt) {
-// //   const {name} = evt.currentTarget.elements;
-
-//   catCat()
-//     .then((data) => elements.list.innerHTML = createMarkup(data.name))
-//     .catch((err) => console.log(err));
-// }
+// refs.select.addEventListener('change', onCatalog);
 
 
 
-// function createMarkup(arr) {
-//     return arr.map(({id, name }) =>
-//   `<option value="${id}">${name}</option>`).join("");
-// }
+fetchBreeds()
+    .then((data) => refs.select.innerHTML = createMarkup(data)
+    )
+    .catch((err) => console.log(err));
+
+
+
+
+
+
+function createMarkup(arr) {
+     return arr.map(({id, name }) =>
+     `<option value="${id}">${name}</option>`).join("");
+}
