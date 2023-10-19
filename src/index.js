@@ -1,4 +1,4 @@
-import { fetchBreeds, fetchCatByBreed } from './cat-api';
+import { fetchBreeds, fetchCatByBreed } from '/cat-api';
 
 console.log(fetchBreeds());
 console.log(fetchCatByBreed('abys'));
