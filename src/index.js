@@ -4,7 +4,7 @@ console.log(fetchBreeds());
 console.log(fetchCatByBreed('char'));
 console.log(fetchCatInfo('0XYvRd7oD'));
 
-refs = {
+const refs = {
     select: document.querySelector('.breed-select'),
     loaderMes: document.querySelector('.loader'),
     errorMes: document.querySelector('.error'),
