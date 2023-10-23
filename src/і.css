@@ -69,8 +69,23 @@ html,
 .cat-info{
     margin-right: 50px;
 }
+.cat-info{
+    width: 800px;
+    margin: auto;
+}
+.swiper-button-prev:after ,
+.swiper-button-prev:after  {
+    width: 10px;
+    height: 10px;
+}
+
+
 
 .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100px;
     height: 100px;
     border: 5px solid #FFF;

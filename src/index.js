@@ -11,6 +11,8 @@ const refs = {
     errorMes: document.querySelector('.error'),
     catInfo: document.querySelector('.cat-info'),
     sliderLine: document.querySelector('.swiper-wrapper'),
+    prewBtn: document.querySelector('.swiper-button-prev'),
+    nextBtn: document.querySelector('.swiper-button-next'),
 }
 
 refs.select.style.display = 'none';
@@ -18,19 +20,27 @@ refs.loaderMes.style.display = 'none';
 refs.errorMes.style.display = 'none';
 refs.catInfo.style.display = 'none';
 refs.sliderLine.style.display = 'none';
+// refs.prewBtn.style.display = 'none';
+// refs.nextBtn.style.display = 'none';
 
 fetchBreeds()
     .then((response) => {
         refs.select.style.display = "flex";
-        console.log(response.data);//////////////////
+        //////////////////console.log(response.data);
+        refs.loaderMes.style.display = 'none';
+refs.errorMes.style.display = 'none';
+refs.catInfo.style.display = 'none';
+refs.sliderLine.style.display = 'none';
+// refs.prewBtn.style.display = 'none';
+// refs.nextBtn.style.display = 'none';
         refs.select.innerHTML = createMarkup(response.data);
-        //  refs.select.insertAdjacentHTML('beforeend', createMarkup(response.data));
         new SlimSelect({
             select: refs.select,
             settings: {
                 placeholderText: 'Which cat would you like to read about?',
             }
         })
+        
     })
     .catch((eror) => {
         console.error(eror);
@@ -47,15 +57,16 @@ function createMarkup(arr) {
 
  refs.select.addEventListener('change', onCatalog);
 function onCatalog(e) {
-    console.log(e.target.value);//////////////////
+    //////////////////console.log(e.target.value);
     fetchCatByBreed(e.target.value)
         .then((dataCat) => {
-            refs.catInfo.style.display = 'initial';
-            refs.sliderLine.style.display = 'initial';
-            console.log(dataCat.data);///////////////////
+            ///////////////////console.log(dataCat.data);
             refs.sliderLine.innerHTML = createCatInfo(dataCat.data);
             refs.catInfo.innerHTML =  createCatInfo2(dataCat);
-        
+            refs.catInfo.style.display = 'initial';
+            refs.sliderLine.style.display = 'initial';
+            // refs.prewBtn.style.display = 'initial';
+            // refs.nextBtn.style.display = 'initial';
             const swiper = new Swiper('.swiper', {
  slidesPerView: 1,
 //   spaceBetween: 16,
@@ -82,8 +93,7 @@ function onCatalog(e) {
 }
 
 function createCatInfo(arr) {
-    console.log(arr);
-    // const { data: [{ id, url }] } = dataCat;
+   // console.log(arr);
      return arr.map(({id, url}) =>
      `
         
@@ -101,37 +111,6 @@ function createCatInfo2(dataCat) {
 <h2 class="h-name">${name}</h2>
   <h3 class="h-origin"></h3>
  <p class="p-description">${description}</p>
- <br>
  <p class="p-temperament"><i><b>Temperament: </b>${temperament}</i></p>
         `;
 }
-
-//////////////////////////////////////////////////////////
-// const sdfsd = document.querySelector('.prev')
-// const ssss = document.querySelector('.next')
-// var slideIndex = 1;
-// showSlides(slideIndex);
-
-// sdfsd.addEventListener('click', plusSlides)
-// function plusSlides(n) {
-//     showSlides(slideIndex += n);
-// }
-// ssss.addEventListener('click', currentSlide)
-// function currentSlide(n) {
-//     showSlides(slideIndex = n);
-// }
-
-// function showSlides(n) {
-//     let i;
-//     let slides = document.getElementsByClassName("mySlides");
-//     if (n > slides.length) {
-//         slideIndex = 1
-//     }
-//     if (n < 1) {
-//         slideIndex = slides.length
-//     }
-//     for (i = 0; i < slides.length; i++){
-//         slides[i].sthyle.display = "none";
-//     }
-//  slides[slideIndex-1].style.display = "block"
-// };
