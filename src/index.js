@@ -2,6 +2,7 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
 // import Swiper from 'swiper';
 import SlimSelect from 'slim-select'
+// import './css/swiper.css';
 import './css/slimselect.css';
 
 const refs = {
@@ -12,11 +13,15 @@ const refs = {
     sliderLine: document.querySelector('.swiper-wrapper'),
 }
 
+refs.select.style.display = 'none';
 refs.loaderMes.style.display = 'none';
 refs.errorMes.style.display = 'none';
+refs.catInfo.style.display = 'none';
+refs.sliderLine.style.display = 'none';
 
 fetchBreeds()
     .then((response) => {
+        refs.select.style.display = "flex";
         console.log(response.data);//////////////////
         refs.select.innerHTML = createMarkup(response.data);
         //  refs.select.insertAdjacentHTML('beforeend', createMarkup(response.data));
@@ -42,10 +47,11 @@ function createMarkup(arr) {
 
  refs.select.addEventListener('change', onCatalog);
 function onCatalog(e) {
-     refs.loaderMes.style.display = 'initial';
     console.log(e.target.value);//////////////////
     fetchCatByBreed(e.target.value)
         .then((dataCat) => {
+            refs.catInfo.style.display = 'initial';
+            refs.sliderLine.style.display = 'initial';
             console.log(dataCat.data);///////////////////
             refs.sliderLine.innerHTML = createCatInfo(dataCat.data);
             refs.catInfo.innerHTML =  createCatInfo2(dataCat);
@@ -72,7 +78,6 @@ function onCatalog(e) {
             Notiflix.Notify.failure(`Oops! Something went wrong! Try reloading the page!`);
             
         })
-    
     .finally(_ => refs.loaderMes.style.display = 'none');
 }
 
@@ -92,7 +97,6 @@ function createCatInfo(arr) {
 function createCatInfo2(dataCat) {
             const { data: [{ id, url,
                 breeds: [{ name, description, temperament }] }] } = dataCat;
-
     return `
 <h2 class="h-name">${name}</h2>
   <h3 class="h-origin"></h3>
