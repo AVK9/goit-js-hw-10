@@ -11,28 +11,19 @@ const refs = {
     errorMes: document.querySelector('.error'),
     catInfo: document.querySelector('.cat-info'),
     sliderLine: document.querySelector('.swiper-wrapper'),
-    prewBtn: document.querySelector('.swiper-button-prev'),
-    nextBtn: document.querySelector('.swiper-button-next'),
+    // prewBtn: document.querySelector('.swiper-button-prev'),
+    // nextBtn: document.querySelector('.swiper-button-next'),
 }
-
+refs.errorMes.style.display = 'none';
 refs.select.style.display = 'none';
 refs.loaderMes.style.display = 'none';
-refs.errorMes.style.display = 'none';
-refs.catInfo.style.display = 'none';
-refs.sliderLine.style.display = 'none';
+refs.sliderLine.innerHTML = "";
+refs.catInfo.innerHTML = "";
 // refs.prewBtn.style.display = 'none';
 // refs.nextBtn.style.display = 'none';
 
 fetchBreeds()
     .then((response) => {
-        refs.select.style.display = "flex";
-        //////////////////console.log(response.data);
-        refs.loaderMes.style.display = 'none';
-refs.errorMes.style.display = 'none';
-refs.catInfo.style.display = 'none';
-refs.sliderLine.style.display = 'none';
-// refs.prewBtn.style.display = 'none';
-// refs.nextBtn.style.display = 'none';
         refs.select.innerHTML = createMarkup(response.data);
         new SlimSelect({
             select: refs.select,
@@ -40,15 +31,13 @@ refs.sliderLine.style.display = 'none';
                 placeholderText: 'Which cat would you like to read about?',
             }
         })
-        
     })
-    .catch((eror) => {
-        console.error(eror);
-        Notiflix.Notify.failure(`Oops! Something went wrong! Try reloading the page!`);
-    })
+    .catch((err) => errLoad(err))
     .finally(_ => refs.loaderMes.style.display = 'none');
     
 function createMarkup(arr) {
+        refs.select.style.display = "flex";
+        refs.loaderMes.style.display = 'initial';
         const placeholderEl = '<option data-placeholder="true">'
         const arrEls = arr.map(({ id, name }) =>
             `<option value="${id}">${name}</option>`).join("");
@@ -57,16 +46,14 @@ function createMarkup(arr) {
 
  refs.select.addEventListener('change', onCatalog);
 function onCatalog(e) {
-    //////////////////console.log(e.target.value);
+    refs.loaderMes.style.display = 'initial';
+    refs.sliderLine.innerHTML = "";
+    refs.catInfo.innerHTML = "";
     fetchCatByBreed(e.target.value)
-        .then((dataCat) => {
-            ///////////////////console.log(dataCat.data);
+      .then((dataCat) => {
             refs.sliderLine.innerHTML = createCatInfo(dataCat.data);
             refs.catInfo.innerHTML =  createCatInfo2(dataCat);
-            refs.catInfo.style.display = 'initial';
-            refs.sliderLine.style.display = 'initial';
-            // refs.prewBtn.style.display = 'initial';
-            // refs.nextBtn.style.display = 'initial';
+            
             const swiper = new Swiper('.swiper', {
  slidesPerView: 1,
 //   spaceBetween: 16,
@@ -74,22 +61,19 @@ function onCatalog(e) {
   autoplay: {
   delay: 2000,
                 },
-  pagination: {
-    el: '.swiper-pagination',
-                },
-    navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
+//   pagination: {
+//     el: '.swiper-pagination',
+//                 },
+//     navigation: {
+//     nextEl: '.swiper-button-next',
+//     prevEl: '.swiper-button-prev',
+//   },
 });
         
         })
-        .catch((err) => {
-            console.log(err)
-            Notiflix.Notify.failure(`Oops! Something went wrong! Try reloading the page!`);
-            
-        })
-    .finally(_ => refs.loaderMes.style.display = 'none');
+        .catch((err) => errLoad(err))
+        .finally(_ => refs.loaderMes.style.display = 'none');
+
 }
 
 function createCatInfo(arr) {
@@ -113,4 +97,13 @@ function createCatInfo2(dataCat) {
  <p class="p-description">${description}</p>
  <p class="p-temperament"><i><b>Temperament: </b>${temperament}</i></p>
         `;
+}
+
+function errLoad(err) {
+    console.log(err);
+    refs.select.style.display = 'none';
+    refs.sliderLine.innerHTML = "";
+    refs.catInfo.innerHTML = "";
+    Notiflix.Notify.failure(`Oops! Something went wrong! Try reloading the page!`);
+    refs.errorMes.style.display = 'initial';
 }

@@ -1,9 +1,8 @@
 html,
  body {
-        width: 800px;
-        margin-right: 50px;
-      
-      height: 100%;
+    margin: auto;
+    width: 550px;
+    height: 100%;
     }
 
     body {
@@ -16,13 +15,13 @@ html,
       padding: 0;
     }
 
-    swiper-container {
+    .swiper-container {
       width: 100%;
       height: 100%;
     
     }
 
-    swiper-slide {
+    .swiper-slide {
       text-align: center;
       font-size: 18px;
       background: #fff;
@@ -31,15 +30,15 @@ html,
       align-items: center;
     }
 
-    swiper-slide img {
+    .swiper-slide img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
     .swiper {
-        margin-top: 20px;
- position: relative;
+  margin-top: 20px;
+  position: relative;
   width: 550px;
   height: 400px;
 }
@@ -55,22 +54,20 @@ html,
     position: 1;
     /* bottom: 0; */
 }
-.swiper-slide{
-    border-radius: 20%;
-}
+
 .breed-select{
-    margin-top: 20px; 
-    margin-left: 50px;
-    margin-right: 50px;
+   margin: 0;
+      padding: 0;
 }
 
 .swiper,
 .swiper-wrapper,
 .cat-info{
     margin-right: 50px;
+    border-radius: 7%;
 }
 .cat-info{
-    width: 800px;
+    width: 500px;
     margin: auto;
 }
 .swiper-button-prev:after ,
@@ -78,29 +75,29 @@ html,
     width: 10px;
     height: 10px;
 }
-
-
-
-.loader {
+ .loader {
+    margin: auto;}
+ .loadercss {
+    margin: auto;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    border: 5px solid #FFF;
-    border-bottom-color: #FF3D00;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    }
+    transform: translate(-40%, -40%);
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 10px solid #ff6600;
+  border-right: 10px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
 
-    @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-    } 
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
